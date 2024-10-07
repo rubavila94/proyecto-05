@@ -32,17 +32,8 @@
                 <h2 class="card-title">Informacion del Empleado</h2>
                 <p>ID: <span th:text="${empleado.id}"></span></p>
                 <p>Nombre: <span th:text="${empleado.nombre}"></span></p>
-            </div>
-        </div>
-
-        <div class="card mt-3">
-            <div class="card-body">
-                <h2 class="card-title">Proyectos asociados</h2>
-                <ul class="list-group">
-                    <li th:each="proyecto : ${proyectos}" class="list-group-item">
-                        <span th:text="${proyecto.nombre}"></span> - <span th:text="${proyecto.descripcion}"></span>
-                    </li>
-                </ul>>
+                <p>Apellido: <span th:text="${empleado.apellido}"></span></p>
+                <p>Salario: <span th:text="${empleado.salario}"></span></p>
             </div>
         </div>
     </div>

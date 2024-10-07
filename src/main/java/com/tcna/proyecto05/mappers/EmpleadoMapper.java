@@ -14,12 +14,8 @@ public interface EmpleadoMapper {
     @Insert("INSERT INTO Empleado (nombre, apellido, salario, departamento_id) VALUES(#{nombre}, #{apellido}, #{salario}, #{departamento.id})")
     void insertEmpleado(Empleado empleado);
 
-    @Select("SELECT e.id AS id, e.nombre AS nombre, e.apellido AS apellido, e.salario AS salario, " +
-            "d.id AS departamento_id, d.nombre AS departamento_nombre, d.ubicacion AS dep_ubicacion, " +
-            "p.id AS proyecto_id, p.nombre AS proyecto_nombre FROM Empleado e " +
-            "LEFT JOIN Departamento d ON e.departamento_id = d.id " +
-            "LEFT JOIN proyecto_empleado pe ON e.id = pe.empleado_id " +
-            "LEFT JOIN Proyecto p ON pe.proyecto_id = p.id " +
+    @Select("SELECT e.id as id, e.nombre as nombre, e.apellido as apellido, e.salario as salario " +
+            "FROM Empleado e " +
             "WHERE e.id = #{id}")
     Empleado getEmpleadoById(int id);
 
