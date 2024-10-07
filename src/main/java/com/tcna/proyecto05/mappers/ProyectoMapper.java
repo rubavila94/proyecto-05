@@ -16,11 +16,11 @@ public interface ProyectoMapper {
     @Insert("INSERT INTO proyecto (nombre) VALUES(#{nombre})")
     void insertProyecto(Proyecto proyecto);
 
-    @Select("SELECT * FFROM Proyecto WHERE id = #{id}")
+    @Select("SELECT * FROM Proyecto WHERE id = #{id}")
     Proyecto getProyectoById(int id);
 
-    @Select("SELECT DISTINCT p.id, p.nombre FROM Proyecto p" +
-            "LEFT JOIN proyecto_empleado pe ON p.id = pe.proyecto.id")
+    @Select("SELECT DISTINCT p.id, p.nombre FROM Proyecto p " +
+            "LEFT JOIN proyecto_empleado pe ON p.id = pe.proyecto_id")
     List<Proyecto> getAllProyectos();
 
     @Update("UPDATE Proyecto SET nombre = #{nombre} WHERE id = #{id}")

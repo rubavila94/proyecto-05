@@ -14,9 +14,7 @@ import com.tcna.proyecto05.mappers.ProyectoMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/proyectos")
@@ -62,7 +60,7 @@ public class ProyectoController {
     public String mostrarFormularioEdicionProyecto(@PathVariable int id, Model model) {
         Proyecto proyecto = proyectoMapper.getProyectoById(id);
         model.addAttribute("proyecto", proyecto);
-        return "/proyecto/editarProyecto";
+        return "/proyectos/editarProyecto";
     }
 
     @PostMapping("/{id}/editar")
@@ -89,13 +87,13 @@ public class ProyectoController {
     @PostMapping("/{idProyecto}/empleados/asignar/{idEmpleado}")
     public String asignarEmpleadoAProyecto(@PathVariable int idProyecto, @PathVariable int idEmpleado) {
         proyectoMapper.asignarEmpleadoAProyecto(idProyecto, idEmpleado);
-        return "redirect:/proyectos" + idProyecto + "/empleados";
+        return "redirect:/proyectos/" + idProyecto + "/empleados";
     }
 
     @PostMapping("/{idProyecto}/empleados/designar/{idEmpleado}")
     public String designarEmpleadoDeProyecto(@PathVariable int idProyecto, @PathVariable int idEmpleado) {
         proyectoMapper.designarEmpleadoDeProyecto(idProyecto, idEmpleado);
-        return "redirect:/proyectos" + idProyecto + "/empleados";
+        return "redirect:/proyectos/" + idProyecto + "/empleados";
     }
 
     @GetMapping("/{id}/empleados")

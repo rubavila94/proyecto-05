@@ -1,11 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Detalles del Empleado</title>
 </head>
+
 <body>
-    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Gestion de proyectos</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/proyectos">Proyectos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/empleados">Empleados</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/departamentos">Departamentos</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1>Detalles del Empleado</h1>
+        <div class="card mt-3">
+            <div class="card-body">
+                <h2 class="card-title">Informacion del Empleado</h2>
+                <p>ID: <span th:text="${empleado.id}"></span></p>
+                <p>Nombre: <span th:text="${empleado.nombre}"></span></p>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h2 class="card-title">Proyectos asociados</h2>
+                <ul class="list-group">
+                    <li th:each="proyecto : ${proyectos}" class="list-group-item">
+                        <span th:text="${proyecto.nombre}"></span> - <span th:text="${proyecto.descripcion}"></span>
+                    </li>
+                </ul>>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

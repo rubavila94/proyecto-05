@@ -1,7 +1,6 @@
 package com.tcna.proyecto05.mappers;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -30,7 +29,7 @@ public interface EmpleadoMapper {
             "LEFT JOIN Departamento d ON e.departamento_id = d.id")
     List<Empleado> getAllEmpleados();
 
-    @Update("UPDATE Empleado SET nombre = #{nombre}, apellido = #{apellido}, salario = #{salario}, departamento_id = #{departamento_id} WHERE id = #{id}")
+    @Update("UPDATE Empleado SET nombre = #{nombre}, apellido = #{apellido}, salario = #{salario}, departamento_id = #{departamento.id} WHERE id = #{id}")
     void updateEmpleado(Empleado empleado);
 
     @Delete("DELETE FROM Empleado WHERE id = #{id}")
@@ -41,7 +40,7 @@ public interface EmpleadoMapper {
     List<Empleado> getEmpleadosNoAsignadosAProyecto(int proyectoId);
 
     // El contrario que el metodo de arriba
-    @Select("SELECT e.* FROM Empleado e INNER JOIN proyecto_empleado pe ON e.id = pe.empleado_id WHERE pe.proyecto_id = #{proyectoId})")
+    @Select("SELECT e.* FROM Empleado e INNER JOIN proyecto_empleado pe ON e.id = pe.empleado_id WHERE pe.proyecto_id = #{proyectoId}")
     List<Empleado> getEmpleadosByProyectoId(int proyectoId);
 
     @Delete("DELETE FROM Empleado WHERE departamento_id = #{departamentoId}")
