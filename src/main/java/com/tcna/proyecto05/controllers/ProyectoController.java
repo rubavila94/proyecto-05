@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tcna.proyecto05.entities.Empleado;
 import com.tcna.proyecto05.entities.Proyecto;
 import com.tcna.proyecto05.mappers.EmpleadoMapper;
 import com.tcna.proyecto05.mappers.ProyectoMapper;
@@ -55,6 +56,57 @@ public class ProyectoController {
         List<Proyecto> proyectos = proyectoMapper.getAllProyectos();
         model.addAttribute("proyectos", proyectos);
         return "proyectos/listaProyectos";
+    }
+
+    @GetMapping("/{id}/editar")
+    public String mostrarFormularioEdicionProyecto(@PathVariable int id, Model model) {
+        Proyecto proyecto = proyectoMapper.getProyectoById(id);
+        model.addAttribute("proyecto", proyecto);
+        return "/proyecto/editarProyecto";
+    }
+
+    @PostMapping("/{id}/editar")
+    public String editarProyecto(@PathVariable int id, @ModelAttribute Proyecto proyecto) {
+        proyecto.setId(id);
+        proyectoMapper.updateProyecto(proyecto);
+        return "redirect:/proyectos";
+    }
+
+    /*
+     * Primero eliminamos la relacion, y luego el proyecto en si ya que están
+     * relacionados
+     * Por lo que no podemos eliminar un proyecto directamente
+     */
+
+    @GetMapping("/{id}/eliminar")
+    public String eliminarProyecto(@PathVariable int id) {
+        proyectoMapper.deleteProyectoEmpleado(id);
+        proyectoMapper.deleteProyecto(id);
+        return "redirect:/proyectos";
+    }
+
+    // Asignamos empleados a un proyecto
+    @PostMapping("/{idProyecto}/empleados/asignar/{idEmpleado}")
+    public String asignarEmpleadoAProyecto(@PathVariable int idProyecto, @PathVariable int idEmpleado) {
+        proyectoMapper.asignarEmpleadoAProyecto(idProyecto, idEmpleado);
+        return "redirect:/proyectos" + idProyecto + "/empleados";
+    }
+
+    @PostMapping("/{idProyecto}/empleados/designar/{idEmpleado}")
+    public String designarEmpleadoDeProyecto(@PathVariable int idProyecto, @PathVariable int idEmpleado) {
+        proyectoMapper.designarEmpleadoDeProyecto(idProyecto, idEmpleado);
+        return "redirect:/proyectos" + idProyecto + "/empleados";
+    }
+
+    @GetMapping("/{id}/empleados")
+    public String mostrarEmpleadosProyecto(@PathVariable int id, Model model) {
+        Proyecto proyecto = proyectoMapper.getProyectoById(id);
+        List<Empleado> empleadosAsignados = empleadoMapper.getEmpleadosByProyectoId(id);
+        List<Empleado> empleadosNOAsignados = empleadoMapper.getEmpleadosNoAsignadosAProyecto(id);
+        model.addAttribute("proyecto", proyecto);
+        model.addAttribute("empleadosAsignados", empleadosAsignados);
+        model.addAttribute("empleadosNOAsignados", empleadosNOAsignados);
+        return "/proyectos/listaEmpleadosProyecto";
     }
 
 }
