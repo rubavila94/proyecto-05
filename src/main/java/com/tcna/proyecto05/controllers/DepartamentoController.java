@@ -7,10 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.tcna.proyecto05.entities.Departamento;
 import com.tcna.proyecto05.mappers.DepartamentoMapper;
+import com.tcna.proyecto05.mappers.EmpleadoMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/departamentos")
@@ -18,6 +20,9 @@ public class DepartamentoController {
 
     @Autowired
     private DepartamentoMapper departamentoMapper;
+
+    @Autowired
+    private EmpleadoMapper empleadoMapper;
 
     @GetMapping
     public String listarDepartamentos(Model model) {
@@ -64,4 +69,11 @@ public class DepartamentoController {
         return "redirect:/departamentos";
     }
 
+    @GetMapping("/{id}/eliminar")
+    public String eliminarDepartamento(@PathVariable int id) {
+        empleadoMapper.deleteProyectoEmpleadoByDepartamentoId(id);
+        empleadoMapper.deleteEmpleadosByDepartamentoId(id);
+        departamentoMapper.deleteDepartamento(id);
+        return "redirect:/departamentos";
+    }
 }
