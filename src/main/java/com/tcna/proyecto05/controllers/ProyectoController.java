@@ -1,5 +1,7 @@
 package com.tcna.proyecto05.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +34,7 @@ public class ProyectoController {
     @GetMapping("/crear")
     public String mostrarFormularioCreacionProyecto(Model model) {
         model.addAttribute("proyecto", new Proyecto());
-        return "proyecto/crearProyecto";
+        return "proyectos/crearProyecto";
     }
 
     @PostMapping("/crear")
@@ -43,8 +45,16 @@ public class ProyectoController {
 
     @GetMapping("/{id}")
     public String mostrarDetallesProyecto(@PathVariable int id, Model model) {
-        Proye
-        return new String();
+        Proyecto proyecto = proyectoMapper.getProyectoById(id);
+        model.addAttribute("proyecto", proyecto);
+        return "proyectos/detallesProyecto";
+    }
+
+    @GetMapping
+    public String listarProyectos(Model model) {
+        List<Proyecto> proyectos = proyectoMapper.getAllProyectos();
+        model.addAttribute("proyectos", proyectos);
+        return "proyectos/listaProyectos";
     }
 
 }
